@@ -5,7 +5,12 @@ export default {
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        bb: "var(--backG)",
+        txtColor: "var(--txtColor)",
+      }
+    },
   },
   plugins: [
     require('flowbite/plugin')

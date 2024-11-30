@@ -1,10 +1,9 @@
 import DragDropCanvas from "./DragDropCanvas";
 
 function App() {
-
+  
   return (
-    <div>
-      
+    <div className="min-h-full">
       <DragDropCanvas />
     </div>
   );

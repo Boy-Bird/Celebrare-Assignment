@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { LuUndo, LuUndo2 } from "react-icons/lu";
 import { LuRedo2 } from "react-icons/lu";
-import { FaPlus } from "react-icons/fa6";
-import { FaMinus } from "react-icons/fa";
 import { MdFormatBold } from "react-icons/md";
 import { GoItalic } from "react-icons/go";
 import { BsTypeUnderline } from "react-icons/bs";
@@ -25,10 +23,11 @@ const DragDropCanvas = () => {
   const [italic, setItalic] = useState(false); // Italic style
   const [underline, setUnderline] = useState(false);
   const [fontFamily, setFontFamily] = useState("Arial");
+  
+  const [dark, setDark] = useState(false);
 
   const handleMouseDown = (e) => {
     setIsDragging(true);
-    // Calculate offset for smooth dragging
     setOffset({
       x: e.clientX - position.x,
       y: e.clientY - position.y,
@@ -47,10 +46,9 @@ const DragDropCanvas = () => {
   const handleMouseUp = () => {
     if (isDragging) {
       const newPosition = position;
-      // Add new position to history and reset future states for redo
       const updatedHistory = history.slice(0, historyIndex + 1);
       setHistory([...updatedHistory, newPosition]);
-      setHistoryIndex(updatedHistory.length); // Move the index to the end
+      setHistoryIndex(updatedHistory.length); 
     }
     setIsDragging(false);
   };
@@ -72,62 +70,64 @@ const DragDropCanvas = () => {
   };
 
   const increaseFontSize = () => {
-    setFontSize((prevSize) => prevSize + 2); // Increase font size by 2px
+    setFontSize((prevSize) => prevSize + 2); 
   };
   const decreaseFontSize = () => {
-    setFontSize((prevSize) => prevSize - 2); // Increase font size by 2px
+    setFontSize((prevSize) => prevSize - 2); 
   };
   const toggleBold = () => setBold((prev) => !prev);
   const toggleItalic = () => setItalic((prev) => !prev);
   const toggleUnderline = () => setUnderline((prev) => !prev);
 
   const handleFontChange = (e) => {
-    setFontFamily(e.target.value); // Update the font family
+    setFontFamily(e.target.value); 
   };
 
   const handleStartEditing = () => {
-    setIsEditing(true); // Switch to input mode
+    setIsEditing(true); 
   };
 
   const handleTextChange = (e) => {
-    setText(e.target.value); // Update text while typing
+    setText(e.target.value); 
   };
 
   const handleBlur = () => {
-    setIsEditing(false); // Switch back to text mode on blur
+    setIsEditing(false); 
   };
 
   const handleKeyPress = (e) => {
     if (e.key === "Enter") {
-      setIsEditing(false); // Exit input mode on Enter key
+      setIsEditing(false);
     }
   };
 
   return (
-    <div className="mx-24 my-4">
+    
+    <div className={
+      `${dark ? "dark" : "light"} 
+    min-h-screen bg-bb px-24 py-4`}>
+      
       <header className="h-16 flex justify-center items-center border-b-2 border-gray-300">
         <button
           onClick={handleUndo}
           disabled={historyIndex === 0}
           className="mr-10"
         >
-          <LuUndo2 className="text-2xl" />
-          <p>undo</p>
+          <LuUndo2 className="text-2xl bg-textColor text-txtColor" />
+          <p className="text-txtColor">undo</p>
         </button>
         <button
           onClick={handleRedo}
           disabled={historyIndex === history.length - 1}
         >
-          <LuRedo2 className="text-2xl" />
-          <p>redo</p>
+          <LuRedo2 className="text-2xl text-txtColor" />
+          <p className="text-txtColor">redo</p>
         </button>
       </header>
       <div
         className="bg-gray-200"
         style={{
-          // width: "60vw",
           height: "520px",
-          // borderBottom: "1px solid gray",
           position: "relative",
           overflow: "hidden",
         }}
@@ -145,10 +145,10 @@ const DragDropCanvas = () => {
             top: position.y,
             left: position.x,
             padding: "10px",
-            backgroundColor: "#f0f0f0",
             border: "1px solid #ccc",
             cursor: "grab",
           }}
+          className="bg-"
           onMouseDown={handleMouseDown}
         >
           {isEditing ? (
@@ -157,7 +157,6 @@ const DragDropCanvas = () => {
               value={text}
               onChange={handleTextChange}
               onBlur={handleBlur}
-              onKeyPress={handleKeyPress}
               autoFocus
               style={{
                 fontSize: `${fontSize}px`,
@@ -184,9 +183,11 @@ const DragDropCanvas = () => {
           }}
         >
           <option value="Arial">Arial</option>
-          <option value="Georgia">Georgia</option>
+          <option value="Cursive">Cursive</option>
           <option value="Times New Roman">Times New Roman</option>
+          <option value="Monospace">Monospace</option>
           <option value="Courier New">Courier New</option>
+          <option value="Georgia">Georgia</option>
           <option value="Verdana">Verdana</option>
         </select>
 
@@ -235,7 +236,6 @@ const DragDropCanvas = () => {
           />
         </button>
       </div>
-      {/* <div className="flex justify-center  bg-gray-400 rounded-2xl"> */}
       <button
         onClick={handleStartEditing}
         className="flex justify-center items-center mx-auto h-8 rounded-2xl mt-3"
@@ -244,7 +244,6 @@ const DragDropCanvas = () => {
         <TfiText className="mx-2" />
         <p className="mr-2">Add Text</p>
       </button>
-      {/* </div> */}
     </div>
   );
 };
