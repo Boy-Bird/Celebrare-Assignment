@@ -15,12 +15,12 @@ const DragDropCanvas = () => {
   const [isDragging, setIsDragging] = useState(false);
   const [offset, setOffset] = useState({ x: 0, y: 0 });
 
-  const [text, setText] = useState("Drag Me!"); // Text content
+  const [text, setText] = useState("Drag Me!");
   const [isEditing, setIsEditing] = useState(false);
 
   const [fontSize, setFontSize] = useState(18);
-  const [bold, setBold] = useState(false); // Bold style
-  const [italic, setItalic] = useState(false); // Italic style
+  const [bold, setBold] = useState(false); 
+  const [italic, setItalic] = useState(false); 
   const [underline, setUnderline] = useState(false);
   const [fontFamily, setFontFamily] = useState("Arial");
   
